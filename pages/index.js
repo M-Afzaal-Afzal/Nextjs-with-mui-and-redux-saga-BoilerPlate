@@ -1,18 +1,16 @@
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Link from '../src/utils/Link';
-import * as actions from '../src/store/actions/index.actions';
+import * as actions from '../src/store/counter/counter.actions';
 
 import {useSelector, useDispatch} from "react-redux";
 import {Button} from "@material-ui/core";
+import {selectCounterValue} from '../src/store/counter/counter.selectors'
 
 export default function Index() {
 
     const dispatch = useDispatch();
-    const counter = useSelector(state => {
-        return state.counter;
-    })
+    const counter = useSelector(selectCounterValue)
 
     const addHandler = () => {
         dispatch(actions.incrementCount());
@@ -31,9 +29,6 @@ export default function Index() {
                 <p>counter: {counter}</p>
                 <Button onClick={addHandler}>Add One</Button>
                 <Button onClick={subHandler}>Remove One</Button>
-                <Link href="/about" color="secondary">
-                    Go to the about page
-                </Link>
             </Box>
         </Container>
     );
