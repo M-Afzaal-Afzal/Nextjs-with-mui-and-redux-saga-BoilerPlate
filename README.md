@@ -1,4 +1,4 @@
-# Next.js with mui and redux-thunk example
+# Next.js with mui and redux-saga example
 
 ## How to use
 
