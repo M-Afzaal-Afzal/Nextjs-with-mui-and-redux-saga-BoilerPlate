@@ -1,17 +1,21 @@
 import {useMemo} from 'react'
 import {applyMiddleware, createStore} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import thunkMiddleware from 'redux-thunk'
 import reducers from './index.reducers'
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from "./root.saga";
 
 let store;
 
+const sagaMiddleware = createSagaMiddleware();
+
+const middleWares = [sagaMiddleware];
 
 function initStore(initialState) {
     return createStore(
         reducers,
         initialState,
-        composeWithDevTools(applyMiddleware(thunkMiddleware))
+        composeWithDevTools(applyMiddleware(...middleWares))
     )
 }
 
@@ -33,6 +37,8 @@ export const initializeStore = (preloadedState) => {
     if (typeof window === 'undefined') return _store
     // Create the store once in the client
     if (!store) store = _store
+
+    sagaMiddleware.run(rootSaga);
 
     return _store
 }
